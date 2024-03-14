@@ -11,11 +11,11 @@ const mysql = require('mysql2/promise');
 //   });
 
 const config = mysql.createPool({
-    "host": 'localhost',
+    "host": 'monorail.proxy.rlwy.net',
     "user": 'root',
-    "password": null,
-    "database": 'petsolutions',
-    "port": 3306
+    "password": kAKYXWVLYcJmfDDIjUBDiSIVjhiwOBxM,
+    "database": 'railway',
+    "port": 32744
 });
 
 /*const produção = false;
