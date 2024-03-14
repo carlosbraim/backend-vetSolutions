@@ -13,7 +13,7 @@ const mysql = require('mysql2/promise');
 const config = mysql.createPool({
     "host": 'monorail.proxy.rlwy.net',
     "user": 'root',
-    "password": kAKYXWVLYcJmfDDIjUBDiSIVjhiwOBxM,
+    "password": 'kAKYXWVLYcJmfDDIjUBDiSIVjhiwOBxM',
     "database": 'railway',
     "port": 32744
 });
