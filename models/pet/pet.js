@@ -7,7 +7,9 @@ const {
     updatePetAtivo,
     isertConsultation,
     selectConsultationId,
-    updateConsultationAtivo
+    updateConsultationAtivo,
+    updateConsultation
+
   } = require('./query');
 
 
@@ -76,6 +78,9 @@ async function updateConsultationAtivoModel(data) {
   }
 }
 
+
+
+
   async function setNewPetById(data){
     try{
       conn = await Connection.getConnection();
@@ -101,6 +106,17 @@ async function updateConsultationAtivoModel(data) {
   }
   
   
+  async function updateConsultationModel(data){
+    try{
+      conn = await Connection.getConnection();
+      const [user] = await conn.query(updateConsultation(data), Object.values(data));
+      conn.release();
+      return user;
+    }catch(err){
+      console.log("Erro ao atualizar Cliente")
+      console.log(err)
+    }
+  }  
 
 
   module.exports = {
@@ -110,5 +126,7 @@ async function updateConsultationAtivoModel(data) {
     setNewPetById,
     setNewConsultation,
     getConsultationById,
-    updateConsultationAtivoModel
+    updateConsultationAtivoModel,
+    updateConsultationModel,
+
   };

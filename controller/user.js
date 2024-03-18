@@ -80,5 +80,5 @@ async function updateUserController(req, res){
 module.exports = { 
   postAuthenticationController,
   getUserController,
-  updateUserController
+  updateUserController,
 };

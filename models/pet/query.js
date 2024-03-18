@@ -61,6 +61,8 @@ const updatePet = (data) => {
 }
 
 
+
+
 const updatePetAtivo = () => {
     return `UPDATE dadospet SET Ativo = 0 WHERE Id = ?`;
 }
@@ -69,7 +71,22 @@ const updateConsultationAtivo = () => {
     return `UPDATE consulta SET Ativo = 0 WHERE Id = ?`;
 }
 
+const updateConsultation = (data) => {
+    const query = []
+    Object.keys(data).map(item => {
+        if(item != "Uid" && item != "Id"){
+            query.push(`${item} = ?`);
+        }
+        return item;
+    })
+
+    return `UPDATE consulta SET ${query.join(",")} WHERE Id = '${data.Id} '`
+}
+
   
+
+  
+
 
 module.exports = { 
     selectPetId,
@@ -78,5 +95,6 @@ module.exports = {
     updatePetAtivo,
     isertConsultation,
     selectConsultationId,
-    updateConsultationAtivo
+    updateConsultationAtivo,
+    updateConsultation
 };

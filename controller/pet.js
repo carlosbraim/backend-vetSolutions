@@ -6,7 +6,9 @@ const {
     updatePetAtivoModel,
     setNewConsultation,
     getConsultationById,
-    updateConsultationAtivoModel
+    updateConsultationAtivoModel,
+    updateConsultationModel,
+
    } = require('../models/pet/pet');
 
    const jwt = require('jsonwebtoken');
@@ -50,7 +52,7 @@ const {
       console.log('token',token)
       console.log('decoded',decoded)
       console.log('decoded.typeUser',decoded.typeUser)
-      if(decoded.typeUser == 1){
+      if(decoded.typeUser){
         const update = await updatePetModel(data)
         if(update.affectedRows ==0){
           return res.status(404).json({ error: 'Dados do Pet nao atualizados'});
@@ -77,7 +79,7 @@ const {
       console.log('token',token)
       console.log('decoded',decoded)
       console.log('decoded.typeUser',decoded.typeUser)
-      if(decoded.typeUser == 1){
+      if(decoded.typeUser){
         const update = await updatePetAtivoModel(data)
         if(update.affectedRows ==0){
           return res.status(404).json({ error: 'Dados do Pet Ativo nao atualizados'});
@@ -103,7 +105,7 @@ const {
       console.log('token',token)
       console.log('decoded',decoded)
       console.log('decoded.typeUser',decoded.typeUser)
-      if(decoded.typeUser == 1){
+      if(decoded.typeUser){
         const update = await updateConsultationAtivoModel(data)
         if(update.affectedRows ==0){
           return res.status(404).json({ error: 'Dados Consulta Ativo nao atualizados'});
@@ -140,9 +142,9 @@ const {
         PhotoUrl: req.body.PhotoUrl,
         DataNascimento: req.body.DataNascimento,
       }
-      const token = jwt.sign(dataPet,'@pethash', {expiresIn: '12h'})
+      /*const token = jwt.sign(dataPet,'@pethash', {expiresIn: '12h'})
       console.log('token', token)
-      res.status(200).json({menssage: "Dados inseridos com sucesso", token:token})
+      res.status(200).json({menssage: "Dados inseridos com sucesso", token:token})*/
       
     }catch(err){
       console.log(err);
@@ -172,13 +174,39 @@ const {
         DataRetorno: req.body.DataRetorno,
         Prescricao: req.body.Prescricao,
       }
-      const token = jwt.sign(dataPet,'@pethash', {expiresIn: '12h'})
+      /*const token = jwt.sign(dataPet,'@pethash', {expiresIn: '12h'})
       console.log('token', token)
-      res.status(200).json({menssage: "Dados inseridos com sucesso", token:token})
+      res.status(200).json({menssage: "Dados inseridos com sucesso", token:token})*/
       
     }catch(err){
       console.log(err);
       return res.status(400).json({ error: 'Error ao inserir dados na tabela'});
+    }
+  }
+
+  
+  async function updateConsultationController(req, res){
+    try{
+      let data = req.body;
+      const token = req?.headers?.authorization?.replace(/Bearer /gi, '');
+      const decoded = jwt.verify(token, '@pethash');
+
+      console.log('token',token)
+      console.log('decoded',decoded)
+      console.log('decoded.typeUser',decoded.typeUser)
+      if(decoded.typeUser){
+        const update = await updateConsultationModel(data)
+        if(update.affectedRows ==0){
+          return res.status(404).json({ error: 'Dados do Pet nao atualizados'});
+        }
+        return res.status(200).json(update);
+      }else{
+        return res.status(400).json({ error: 'Acesso negado'});
+      }
+      
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao atualizar dados do Pet'});
     }
   }
 
@@ -190,5 +218,6 @@ const {
     updatePetAtivoController,
     postNewConsultationController,
     getConsultationController,
-    updateConsultationAtivoController
+    updateConsultationAtivoController,
+    updateConsultationController,
 };
